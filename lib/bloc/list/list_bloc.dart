@@ -5,7 +5,7 @@ import 'list_state.dart';
 class ListBloc extends Bloc<ListEvent, ListState> {
   ListBloc() : super(ListState([])) {
     on<AddToList>((event, emit) {
-      // add item object
+      // add item object to front
       state.items.add(event.item);
       emit(ListState(state.items));
     });
