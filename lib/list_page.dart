@@ -8,7 +8,7 @@ class ListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final listBloc = context.read<ListBloc>();
+    final listBloc = context.read<ListBloc>();
 
     return Scaffold(body: const Text("I'm the list page"));
   }

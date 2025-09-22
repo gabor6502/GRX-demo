@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grx_demo/bloc/list/list_bloc.dart';
 import 'package:grx_demo/list_page.dart';
 
 void main() {
@@ -11,12 +13,15 @@ class GrxDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.green,
-          title: const Text('GRX Demo'),
+      home: MultiBlocProvider(
+        providers: [BlocProvider(create: (context) => ListBloc())],
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.green,
+            title: const Text('GRX Demo'),
+          ),
+          body: ListPage(),
         ),
-        body: ListPage(),
       ),
     );
   }
