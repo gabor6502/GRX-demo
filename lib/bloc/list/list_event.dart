@@ -1,5 +1,7 @@
+import 'package:grx_demo/bloc/item/item_state.dart';
+
 abstract class ListEvent {
-  final String item;
+  final ItemState item;
 
   ListEvent(this.item);
 }

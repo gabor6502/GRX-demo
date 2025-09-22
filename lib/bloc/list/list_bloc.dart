@@ -5,11 +5,13 @@ import 'list_state.dart';
 class ListBloc extends Bloc<ListEvent, ListState> {
   ListBloc() : super(ListState([])) {
     on<AddToList>((event, emit) {
+      // add item object
       state.items.add(event.item);
       emit(ListState(state.items));
     });
     on<RemoveFromList>((event, emit) {
-      state.items.remove(event.item);
+      // remove by id only
+      state.items.removeWhere((item) => item.id == event.item.id);
       emit(ListState(state.items));
     });
   }

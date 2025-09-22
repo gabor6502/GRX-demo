@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grx_demo/bloc/item/item_state.dart';
 import 'package:grx_demo/bloc/list/list_bloc.dart';
 import 'package:grx_demo/bloc/list/list_event.dart';
 import 'package:grx_demo/bloc/list/list_state.dart';
@@ -14,15 +15,25 @@ class ListPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          listBloc.add(AddToList("Apples!"));
+          listBloc.add(AddToList(ItemState("Apples!")));
         },
         child: Icon(Icons.add),
       ),
       body: BlocBuilder<ListBloc, ListState>(
         builder: (context, state) {
           return ListView(
-            children: state.items.map((elemString) {
-              return Text(elemString);
+            children: state.items.map((elem) {
+              return Row(
+                children: [
+                  Text(elem.name + elem.id.toString()),
+                  IconButton(
+                    onPressed: () {
+                      listBloc.add(RemoveFromList(elem));
+                    },
+                    icon: Icon(Icons.remove),
+                  ),
+                ],
+              );
             }).toList(),
           );
         },
