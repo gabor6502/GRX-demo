@@ -25,15 +25,20 @@ class ListPage extends StatelessWidget {
           return ListView.builder(
             itemCount: state.items.length,
             itemBuilder: (BuildContext context, int index) {
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider(
-                    create: (context) => state.items[index],
-                    lazy: false,
-                  ),
-                  BlocProvider(create: (context) => listBloc),
-                ],
-                child: ItemWidget(),
+              return BlocProvider(
+                create: (context) =>
+                    state.items[index], //state.items.reversed.elementAt(index),
+                child: Row(
+                  children: [
+                    ItemWidget(),
+                    IconButton(
+                      onPressed: () {
+                        listBloc.add(RemoveFromList(state.items[index]));
+                      },
+                      icon: Icon(Icons.remove),
+                    ),
+                  ],
+                ),
               );
             },
           );
@@ -42,16 +47,3 @@ class ListPage extends StatelessWidget {
     );
   }
 }
-
-/*
-ListView(
-            children: state.items.reversed.map((elem) {
-              // FIX!!!last elem in reversed list (i.e. first) is always every elem
-              return MultiBlocProvider(
-                providers: [
-                  BlocProvider(create: (context) => elem, lazy: false),
-                  BlocProvider(create: (context) => listBloc),
-                ],
-                child: ItemWidget(),
-              );
-            }).toList(),);*/

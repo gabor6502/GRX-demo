@@ -15,27 +15,29 @@ class ItemWidget extends StatefulWidget {
 
 class _ItemWidgetState extends State<ItemWidget> {
   bool editing = true; // do we show textfield for editing name or plaintext
-  final _textEditingController = TextEditingController();
+  //final _textEditingController = TextEditingController();
 
+  /*
   @override
   void dispose() {
     _textEditingController.dispose();
     super.dispose();
   }
-
+*/
   @override
   Widget build(BuildContext context) {
-    final itemBloc = context.read<ItemBloc>();
-    final listBloc = context.read<ListBloc>();
+    //final itemBloc = context.read<ItemBloc>();
+    // final listBloc = context.read<ListBloc>();
 
+    /*
     changeName(String name) {
       editing = false;
       itemBloc.add(RenameItem(name));
-    }
+    }*/
 
     return BlocBuilder<ItemBloc, ItemState>(
       builder: (context, state) {
-        return editing
+        return /*editing
             ? TextField(
                 controller: _textEditingController,
                 onEditingComplete: () {
@@ -51,17 +53,7 @@ class _ItemWidgetState extends State<ItemWidget> {
                   hintText: "Enter item name",
                 ),
               )
-            : Row(
-                children: [
-                  Text(state.name + state.id.toString()),
-                  IconButton(
-                    onPressed: () {
-                      listBloc.add(RemoveFromList(itemBloc));
-                    },
-                    icon: Icon(Icons.remove),
-                  ),
-                ],
-              );
+            : */ Text(state.name + state.id.toString());
       },
     );
   }
