@@ -35,7 +35,7 @@ class _ItemWidgetState extends State<ItemWidget> {
 
     return BlocBuilder<ItemBloc, ItemState>(
       builder: (context, state) {
-        return /* editing
+        return editing
             ? TextField(
                 controller: _textEditingController,
                 onEditingComplete: () {
@@ -51,17 +51,17 @@ class _ItemWidgetState extends State<ItemWidget> {
                   hintText: "Enter item name",
                 ),
               )
-            : */ Row(
-          children: [
-            Text(state.name + state.id.toString()),
-            IconButton(
-              onPressed: () {
-                listBloc.add(RemoveFromList(itemBloc));
-              },
-              icon: Icon(Icons.remove),
-            ),
-          ],
-        );
+            : Row(
+                children: [
+                  Text(state.name + state.id.toString()),
+                  IconButton(
+                    onPressed: () {
+                      listBloc.add(RemoveFromList(itemBloc));
+                    },
+                    icon: Icon(Icons.remove),
+                  ),
+                ],
+              );
       },
     );
   }

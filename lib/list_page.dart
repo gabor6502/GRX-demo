@@ -20,26 +20,38 @@ class ListPage extends StatelessWidget {
         },
         child: Icon(Icons.add),
       ),
-      body: Row(
-        children: [
-          TextField(),
-          BlocBuilder<ListBloc, ListState>(
-            builder: (context, state) {
-              return ListView(
-                children: state.items.reversed.map((elem) {
-                  return MultiBlocProvider(
-                    providers: [
-                      BlocProvider(create: (context) => elem),
-                      BlocProvider(create: (context) => listBloc),
-                    ],
-                    child: ItemWidget(),
-                  );
-                }).toList(),
+      body: BlocBuilder<ListBloc, ListState>(
+        builder: (context, state) {
+          return ListView.builder(
+            itemCount: state.items.length,
+            itemBuilder: (BuildContext context, int index) {
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(
+                    create: (context) => state.items[index],
+                    lazy: false,
+                  ),
+                  BlocProvider(create: (context) => listBloc),
+                ],
+                child: ItemWidget(),
               );
             },
-          ),
-        ],
+          );
+        },
       ),
     );
   }
 }
+
+/*
+ListView(
+            children: state.items.reversed.map((elem) {
+              // FIX!!!last elem in reversed list (i.e. first) is always every elem
+              return MultiBlocProvider(
+                providers: [
+                  BlocProvider(create: (context) => elem, lazy: false),
+                  BlocProvider(create: (context) => listBloc),
+                ],
+                child: ItemWidget(),
+              );
+            }).toList(),);*/

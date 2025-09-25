@@ -6,7 +6,9 @@ class ListBloc extends Bloc<ListEvent, ListState> {
   ListBloc() : super(ListState([])) {
     on<AddToList>((event, emit) {
       state.items.add(event.item);
-      emit(ListState(state.items));
+      emit(
+        ListState(state.items),
+      ); // do we really need to re-init list every time?
     });
     on<RemoveFromList>((event, emit) {
       // remove by id only
