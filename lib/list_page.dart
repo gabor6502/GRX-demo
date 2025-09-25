@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grx_demo/bloc/item/item_bloc.dart';
-import 'package:grx_demo/bloc/item/item_state.dart';
 import 'package:grx_demo/bloc/list/list_bloc.dart';
 import 'package:grx_demo/bloc/list/list_event.dart';
 import 'package:grx_demo/bloc/list/list_state.dart';
+import 'package:grx_demo/item_widget.dart';
 
 class ListPage extends StatelessWidget {
   const ListPage({super.key});
@@ -16,42 +16,30 @@ class ListPage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          listBloc.add(AddToList(ItemState("new item")));
+          listBloc.add(AddToList(ItemBloc()));
         },
         child: Icon(Icons.add),
       ),
-      body: BlocBuilder<ListBloc, ListState>(
-        builder: (context, state) {
-          return ListView(
-            children: state.items.reversed.map((elem) {
-              return Row(
-                children: [
-                  Text(elem.name + elem.id.toString()),
-                  IconButton(
-                    onPressed: () {
-                      listBloc.add(RemoveFromList(elem));
-                    },
-                    icon: Icon(Icons.remove),
-                  ),
-                ],
+      body: Row(
+        children: [
+          TextField(),
+          BlocBuilder<ListBloc, ListState>(
+            builder: (context, state) {
+              return ListView(
+                children: state.items.reversed.map((elem) {
+                  return MultiBlocProvider(
+                    providers: [
+                      BlocProvider(create: (context) => elem),
+                      BlocProvider(create: (context) => listBloc),
+                    ],
+                    child: ItemWidget(),
+                  );
+                }).toList(),
               );
-            }).toList(),
-          );
-        },
+            },
+          ),
+        ],
       ),
     );
   }
 }
-
-/*
-return TextField(
-                onSubmitted: (value) {
-                  
-                },
-                keyboardType: TextInputType.text,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Enter item name',
-                ),
-              );
-*/

@@ -1,7 +1,7 @@
-import 'package:grx_demo/bloc/item/item_state.dart';
+import 'package:grx_demo/bloc/item/item_bloc.dart';
 
 abstract class ListEvent {
-  final ItemState item;
+  final ItemBloc item;
 
   ListEvent(this.item);
 }
