@@ -1,7 +1,7 @@
-import 'package:grx_demo/bloc/item/item_bloc.dart';
+import 'package:grx_demo/model/item_list.dart';
 
 class ListState {
-  final List<ItemBloc> items;
+  final ItemList items;
 
   ListState(this.items);
 }
