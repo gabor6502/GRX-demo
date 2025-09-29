@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:grx_demo/model/item.dart';
 
@@ -32,7 +34,7 @@ class _ItemNameWidgetState extends State<ItemNameWidget> {
 
     return editing
         ? TextField(
-            controller: _textEditingController,
+            controller: _textEditingController..text = widget.item.name,
             onEditingComplete: () {
               changeName(_textEditingController.text);
             },
@@ -47,7 +49,15 @@ class _ItemNameWidgetState extends State<ItemNameWidget> {
               hintText: "Enter item name",
             ),
           )
-        : Text(widget.item.name);
+        : GestureDetector(
+            onDoubleTap: () {
+              setState(() {
+                editing = true;
+              });
+            },
+            child: Text(widget.item.name),
+          );
+
     //Text(widget.item.id.toString());
   }
 }
